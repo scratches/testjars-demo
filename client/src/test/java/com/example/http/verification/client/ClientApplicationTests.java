@@ -10,15 +10,17 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.experimental.boot.server.exec.CommonsExecWebServerFactoryBean;
 import org.springframework.experimental.boot.server.exec.FileClasspathEntry;
+import org.springframework.experimental.boot.test.context.DynamicProperty;
+import org.springframework.experimental.boot.test.context.EnableDynamicProperty;
 
 @SpringBootTest // (properties = "client.base-url=http://localhost:${remote.server.port}")
 @EnabledIf("isServerJarPresent")
-class HttpVerificationClientApplicationTests {
+class ClientApplicationTests {
 
 	private static String SERVER_JAR = "../server/target/server-0.0.1-SNAPSHOT.jar";
 
 	public static void main(String[] args) {
-		SpringApplication.from(HttpVerificationClientApplication::main).with(ExtraConfiguration.class).run(args);
+		SpringApplication.from(ClientApplication::main).with(ExtraConfiguration.class).run(args);
 	}
 
 	static boolean isServerJarPresent() {
@@ -30,12 +32,12 @@ class HttpVerificationClientApplicationTests {
 	}
 
 	@TestConfiguration(proxyBeanMethods = false)
-	// @EnableDynamicProperty
+	@EnableDynamicProperty
 	static class ExtraConfiguration {
 
 		@Bean
-		// @DynamicProperty(name = "remote.server.port", value = "port")
-		static CommonsExecWebServerFactoryBean verificationServer() throws Exception {
+		@DynamicProperty(name = "remote.server.port", value = "port")
+		static CommonsExecWebServerFactoryBean server() throws Exception {
 			return CommonsExecWebServerFactoryBean.builder()
 					.useRandomPort(false)
 					.classpath(classpath -> classpath

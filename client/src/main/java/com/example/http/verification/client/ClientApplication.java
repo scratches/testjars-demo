@@ -14,10 +14,10 @@ import com.example.http.verification.client.clients.PersonService;
 import com.example.http.verification.client.clients.VerificationService;
 
 @SpringBootApplication
-public class HttpVerificationClientApplication {
+public class ClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HttpVerificationClientApplication.class, args);
+		SpringApplication.run(ClientApplication.class, args);
 	}
 
 	@Bean
