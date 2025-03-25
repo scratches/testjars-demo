@@ -13,7 +13,7 @@ import org.springframework.experimental.boot.server.exec.FileClasspathEntry;
 import org.springframework.experimental.boot.test.context.DynamicProperty;
 import org.springframework.experimental.boot.test.context.EnableDynamicProperty;
 
-@SpringBootTest // (properties = "client.base-url=http://localhost:${remote.server.port}")
+@SpringBootTest(properties = "remote.server.url=http://localhost:${remote.server.port}")
 @EnabledIf("isServerJarPresent")
 class ClientApplicationTests {
 
