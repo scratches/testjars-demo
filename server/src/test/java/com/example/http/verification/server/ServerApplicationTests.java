@@ -1,19 +1,14 @@
 package com.example.http.verification.server;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientPropertiesMapper;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -26,11 +21,8 @@ import org.springframework.experimental.boot.test.context.OAuth2ClientProviderIs
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.client.OAuth2ClientHttpRequestInterceptor;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestClient;
@@ -40,9 +32,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import com.example.http.verification.ServerApplication;
 import com.example.http.verification.service.PersonService;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = { "debug=true" })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
 class ServerApplicationTests {
 
@@ -69,6 +59,7 @@ class ServerApplicationTests {
 		static CommonsExecWebServerFactoryBean authServer() {
 			return CommonsExecWebServerFactoryBean.builder()
 					.defaultSpringBootApplicationMain()
+					.useRandomPort(false)
 					.classpath(classpath -> classpath
 							.entries(MavenClasspathEntry.springBootStarter("oauth2-authorization-server")));
 		}
