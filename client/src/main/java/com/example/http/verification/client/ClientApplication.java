@@ -58,7 +58,6 @@ public class ClientApplication {
 	@Bean
 	public CommandLineRunner runner(PersonService service) {
 		return args -> {
-			Thread.sleep(2000L);
 			System.err.println(service.test());
 		};
 	}
