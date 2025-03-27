@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,9 +39,7 @@ class ServerApplicationTests {
 	@Qualifier("personService")
 	private PersonService service;
 
-	public static void main(String[] args) {
-		SpringApplication.from(ServerApplication::main).with(ExtraConfiguration.class).run(args);
-	}
+
 
 	@Test
 	void contextLoads() {
