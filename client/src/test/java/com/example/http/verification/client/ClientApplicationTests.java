@@ -15,7 +15,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.experimental.boot.server.exec.CommonsExecWebServerFactoryBean;
 import org.springframework.experimental.boot.server.exec.FileClasspathEntry;
 import org.springframework.experimental.boot.server.exec.MavenClasspathEntry;
-import org.springframework.experimental.boot.test.context.DynamicProperty;
+import org.springframework.experimental.boot.test.context.DynamicPortUrl;
 import org.springframework.experimental.boot.test.context.OAuth2ClientProviderIssuerUri;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,8 +53,8 @@ class ClientApplicationTests {
 		}
 
 		@Bean
+		@DynamicPortUrl(name = "remote.server.url")
 		@DependsOn("authServer")
-		@DynamicProperty(name = "remote.server.port", value = "port")
 		static CommonsExecWebServerFactoryBean server(Environment environment) throws Exception {
 			// This won't be set in time, so we need to fix all the ports
 			System.err.println("************* " + environment.getProperty("spring.security.oauth2.client.provider.spring.issuer-uri"));
