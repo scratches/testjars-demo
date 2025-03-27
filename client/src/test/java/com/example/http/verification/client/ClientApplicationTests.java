@@ -16,7 +16,6 @@ import org.springframework.experimental.boot.server.exec.CommonsExecWebServerFac
 import org.springframework.experimental.boot.server.exec.FileClasspathEntry;
 import org.springframework.experimental.boot.server.exec.MavenClasspathEntry;
 import org.springframework.experimental.boot.test.context.DynamicProperty;
-import org.springframework.experimental.boot.test.context.EnableDynamicProperty;
 import org.springframework.experimental.boot.test.context.OAuth2ClientProviderIssuerUri;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +40,6 @@ class ClientApplicationTests {
 	}
 
 	@TestConfiguration(proxyBeanMethods = false)
-	@EnableDynamicProperty
 	static class ExtraConfiguration {
 
 		@Bean
