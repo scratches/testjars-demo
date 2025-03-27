@@ -31,6 +31,10 @@ class ClientApplicationTests {
 	}
 
 	static boolean isServerJarPresent() {
+		if (!new File(SERVER_JAR).exists()) {
+			// try with the top-level working directory
+			SERVER_JAR = "server/target/server-0.0.1-SNAPSHOT.jar";
+		}
 		return new File(SERVER_JAR).exists();
 	}
 
