@@ -5,7 +5,7 @@ import java.io.File;
 import com.example.http.verification.client.clients.PersonService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
-import org.springframework.boot.SpringApplication;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -24,10 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ClientApplicationTests {
 
 	private static String SERVER_JAR = "../server/target/server-0.0.1-SNAPSHOT.jar";
-
-	public static void main(String[] args) {
-		SpringApplication.from(ClientApplication::main).with(ExtraConfiguration.class).run(args);
-	}
 
 	static boolean isServerJarPresent() {
 		return new File(SERVER_JAR).exists();
