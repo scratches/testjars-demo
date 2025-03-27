@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Olga Maciaszek-Sharma
  */
 @RestController
-class PersonController implements PersonService {
+public class PersonController implements PersonService {
 
 	private final ConcurrentHashMap<UUID, Person> persons = new ConcurrentHashMap<>();
 
