@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.env.Environment;
+import org.springframework.experimental.boot.server.exec.CommonsExecWebServer;
 import org.springframework.experimental.boot.server.exec.CommonsExecWebServerFactoryBean;
 import org.springframework.experimental.boot.server.exec.FileClasspathEntry;
 import org.springframework.experimental.boot.server.exec.MavenClasspathEntry;
@@ -47,19 +46,17 @@ class ClientApplicationTests {
 		static CommonsExecWebServerFactoryBean authServer() {
 			return CommonsExecWebServerFactoryBean.builder()
 					.defaultSpringBootApplicationMain()
-					.useRandomPort(false)
 					.classpath(classpath -> classpath
 							.entries(MavenClasspathEntry.springBootStarter("oauth2-authorization-server")));
 		}
 
 		@Bean
 		@DynamicPortUrl(name = "remote.server.url")
-		@DependsOn("authServer")
-		static CommonsExecWebServerFactoryBean server(Environment environment) throws Exception {
-			// This won't be set in time, so we need to fix all the ports
-			System.err.println("************* " + environment.getProperty("spring.security.oauth2.client.provider.spring.issuer-uri"));
+		static CommonsExecWebServerFactoryBean server(CommonsExecWebServer authServer) throws Exception {
+			String issuerUriProp = "spring.security.oauth2.client.provider.spring.issuer-uri";
+			String issuerUri = "http://127.0.0.1:" + authServer.getPort();
 			return CommonsExecWebServerFactoryBean.builder()
-					.useRandomPort(false)
+					.systemProperties(s -> s.put(issuerUriProp, issuerUri))
 					.classpath(classpath -> classpath
 							.entries(new FileClasspathEntry(SERVER_JAR)));
 		}
