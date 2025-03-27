@@ -2,9 +2,11 @@ package com.example.http.verification.client;
 
 import java.io.File;
 
+import com.example.http.verification.client.clients.PersonService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,8 @@ import org.springframework.experimental.boot.server.exec.MavenClasspathEntry;
 import org.springframework.experimental.boot.test.context.DynamicProperty;
 import org.springframework.experimental.boot.test.context.EnableDynamicProperty;
 import org.springframework.experimental.boot.test.context.OAuth2ClientProviderIssuerUri;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @EnabledIf("isServerJarPresent")
@@ -32,7 +36,8 @@ class ClientApplicationTests {
 	}
 
 	@Test
-	void contextLoads() {
+	void personServiceTest(@Autowired PersonService people) {
+		assertThat(people.test()).isEqualTo("test");
 	}
 
 	@TestConfiguration(proxyBeanMethods = false)
