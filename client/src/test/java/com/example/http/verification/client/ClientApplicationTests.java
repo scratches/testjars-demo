@@ -10,10 +10,10 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.experimental.boot.server.exec.CommonsExecWebServerFactoryBean;
 import org.springframework.experimental.boot.server.exec.FileClasspathEntry;
-import org.springframework.experimental.boot.test.context.DynamicProperty;
+import org.springframework.experimental.boot.test.context.DynamicPortUrl;
 import org.springframework.experimental.boot.test.context.EnableDynamicProperty;
 
-@SpringBootTest(properties = "remote.server.url=http://localhost:${remote.server.port}")
+@SpringBootTest
 @EnabledIf("isServerJarPresent")
 class ClientApplicationTests {
 
@@ -36,7 +36,7 @@ class ClientApplicationTests {
 	static class ExtraConfiguration {
 
 		@Bean
-		@DynamicProperty(name = "remote.server.port", value = "port")
+		@DynamicPortUrl(name = "remote.server.url")
 		static CommonsExecWebServerFactoryBean server() throws Exception {
 			return CommonsExecWebServerFactoryBean.builder()
 					.useRandomPort(false)

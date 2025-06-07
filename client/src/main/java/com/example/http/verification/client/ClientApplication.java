@@ -21,7 +21,7 @@ public class ClientApplication {
 	@Bean
 	public RestClientHttpServiceGroupConfigurer groupConfigurer(Environment environment) {
 		return groups -> groups
-				.configureClient((group, builder) -> builder
+				.forEachClient((group, builder) -> builder
 						.baseUrl(environment.getProperty("remote.server.url", "http://localhost:8080")));
 	}
 
